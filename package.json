@@ -1,0 +1,26 @@
+{
+  "name": "ap-vue3-covid",
+  "version": "1.0.0",
+  "licence": "MIT",
+  "scripts": {
+    "start": "yarn vite --config vite.config.js src",
+    "build": "yarn vite build --config vite.config.js src"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "3.0.7",
+    "highcharts": "^9.0.1",
+    "highcharts-vue": "^1.3.5",
+    "moment": "^2.29.1",
+    "vue": "^3.0.7",
+    "vue-router": "4.0.5",
+    "vue3-highcharts": "^0.1.3",
+    "vuex": "4.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "1.1.5",
+    "vite": "^2.1.1"
+  },
+  "peerDependencies": {
+    "@vue/compiler-sfc": "^3.0.7"
+  }
+}
