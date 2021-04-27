@@ -14,3 +14,9 @@ yarn install
 ```
 yarn start 
 ```
+
+## Screenshots
+
+![Screenshot 1](https://github.com/alexpilugin/ap-vue3-composition-api-covid/blob/main/screenshots/screenshot-all.png "Screenshot 1")
+
+![Screenshot 2](https://github.com/alexpilugin/ap-vue3-composition-api-covid/blob/main/screenshots/screenshot-india.png "Screenshot 2")
