@@ -34,7 +34,7 @@ export const covid = {
   mutations: {
     updateValues(state, {Countries, Global, Date}) {
       state.countries = Countries
-      state.orderedList = Countries
+      state.orderedList = state.countries.sortBy('NewConfirmed', false)
       state.global = Global
       state.date = Date
       state.isLoaded = true

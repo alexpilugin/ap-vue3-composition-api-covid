@@ -11,7 +11,7 @@
       />
       <Selector 
         v-if="countries && countries.length > 1"
-        header="Alphabetically | Desc"
+        header='New Confirmed | Desc'
         :hideAll="true"
         :options="orderProps" 
         @onSelect="onSelectOrder"
@@ -19,7 +19,7 @@
     </div>
 
     <MapChart />
-    
+
     <div class="charts">
       <Top20NewConfirmedChart />
       <Top20TotalConfirmedChart />
