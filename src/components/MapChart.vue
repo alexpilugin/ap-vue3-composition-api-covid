@@ -3,6 +3,7 @@
     <!-- <div class="map-chart__title"></div>-->
     <div class="map-chart__content">
       <vue-highcharts
+        v-if="isLoaded"
         type="mapChart"
         :options="chartOptions"
         :redrawOnUpdate="true"
@@ -31,13 +32,16 @@ export default {
   },
   setup() {
     const store = useStore();
-    console.log('map', computed(() =>store.getters["covid/getMapData"]))
+    //console.log('map', computed(() =>store.getters["covid/getMapData"]))
+
+    const isLoaded = computed( () => store.getters["covid/isLoaded"])
+
     const chartOptions = computed(() => ({
       chart: {
         map: worldMap,
       },
       title: {
-        text: "New Confirmed Сases of Disease",
+        text: store.getters["covid/getMapData"].mapChartTitle,
       },
       legend: {
         enabled: true,
@@ -56,7 +60,7 @@ export default {
       },
       series: [
         {
-          name: "New Confirmed Сases",
+          name: store.getters["covid/getMapData"].mapChartTitle,
           states: {
             hover: {
               color: "#ff4286", /* #cf0e00 */
@@ -67,13 +71,14 @@ export default {
             format: "{point.name}",
           },
           allAreas: false, /* to show Greenland */
-          data: store.getters["covid/getMapData"]
+          data: store.getters["covid/getMapData"].mapDataList
         },
       ],
     }));
 
     return {
       chartOptions,
+      isLoaded
     };
   },
 };

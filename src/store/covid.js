@@ -27,7 +27,7 @@ export const covid = {
         'TotalRecovered',
         'TotalDeaths'
       ],
-      orderType: 'Alphabetically | Desc'
+      orderType: 'New Confirmed | Desc' //by default
     }
   },
 
@@ -43,7 +43,7 @@ export const covid = {
       state.selected = country  
     },
     orderByType(state, orderType) {
-      console.log('mutation orderByType', orderType)
+      // // console.log('mutation orderByType', orderType)
       state.orderType = orderType
       if(orderType === 'Alphabetically | Desc') {
         state.orderedList =  state.countries.sortBy('Country', true)
@@ -100,11 +100,11 @@ export const covid = {
       }
     },
     applySelection(ctx, country) {
-      console.log('applySelection', country)
+      // console.log('applySelection', country)
       ctx.commit('selectCountry', country)  
     },
     applyOrder(ctx, orderType) {
-      console.log('action applyOrder', orderType)
+      // console.log('action applyOrder', orderType)
       ctx.commit('orderByType', orderType) 
     }
   },
@@ -117,16 +117,16 @@ export const covid = {
     countryNames: (state) => state.orderedList.map(record => record.Country),
     getCategories: (state) => state.categories,
     globalChartData: (state) => {
-      console.log('globalChartData getter.....')
+      // console.log('globalChartData getter.....')
       if(!state.global) return []
 
       //const categories = state.categories
       const entries = Object.entries(state.global).map(( [k, v] ) => ({ [k]: v }));
-      console.log(entries)
+      // console.log(entries)
 
       //const filtered = entries.filter(entry => categories.includes(Object.keys(entry)[0])); //first key name
       const filtered = entries.filter(entry => Object.keys(entry)[0] !== 'Date')
-      console.log(filtered)
+      // console.log(filtered)
 
       let values = {
         categories: [],
@@ -137,18 +137,18 @@ export const covid = {
         values.categories.push(Object.keys(entry)[0]);
         values.seriesData.push(Object.values(entry)[0]);
       }
-      console.log(values)
+      // console.log(values)
       return values //.map(record => Object.values(record)[0]) //array of values
     },
     getGlobalCategories: (state) => {
-      console.log('getGlobalCategories getter.....')
+      // console.log('getGlobalCategories getter.....')
       if(!state.global) return null
       
       const {Date, ...rest} = state.global;
       return Object.keys(rest)
     },
     getGlobalSeries: (state) => {
-      console.log('getGlobalSeries getter.....')
+      // console.log('getGlobalSeries getter.....')
       if(!state.global) return null
       
       const {Date, ...rest} = state.global;
@@ -182,19 +182,19 @@ export const covid = {
       if(!state.selected) return []  
       const {Country, CountryCode, Date, ID, Slug, Premium, ...rest} = state.selected;
       const categories = Object.keys(rest)
-      console.log('getCoutryCategories', categories)
+      // console.log('getCoutryCategories', categories)
       return categories
     },
     getCountrySeries: (state) => {
       if(!state.selected) return [] 
       const {Country, CountryCode, Date, ID, Slug, Premium, ...rest} = state.selected;
       const series = Object.values(rest)
-      console.log('getCountrySeries', series)
+      // console.log('getCountrySeries', series)
       return series
     },
     getCountryNewSeries: (state) => {
       if(!state.selected) return [] 
-      console.log('getCountryNewSeries', state.selected)
+      // console.log('getCountryNewSeries', state.selected)
       return [
         state.selected.NewDeaths,     // 'NewDeaths', 
         state.selected.NewRecovered,  // 'NewRecovered',
@@ -203,7 +203,7 @@ export const covid = {
     },
     getCountryTotalSeries: (state) => {
       if(!state.selected) return [] 
-      console.log('getCountryNewSeries', state.selected)
+      // console.log('getCountryNewSeries', state.selected)
       return [
         state.selected.TotalDeaths,     // 'TotalDeaths', 
         state.selected.TotalRecovered,  // 'TotalRecovered',
@@ -254,7 +254,12 @@ export const covid = {
       return list.slice(0, 20) // first 20
     },
     getMapData: (state) => {
-      if(!state.countries) return [] 
+      if(!state.countries) {
+        return {
+          mapChartTitle: 'No Data',
+          mapDataList: []
+        }
+      } 
       /*
       var mapDataList = [];
       for(let i = 0; i < state.countries.length; i++) {
@@ -262,12 +267,63 @@ export const covid = {
         mapDataList.push([record.CountryCode.toLowerCase(), record.TotalConfirmed]) 
       }
       */
-      const mapDataList = state.countries.map(record => [
-          record.CountryCode.toLowerCase(), 
-          record.NewConfirmed
-      ]) 
-      console.log('getMapData', mapDataList)
-      return mapDataList
+     let mapChartTitle = ''
+      const mapDataList = state.countries.map(record => {
+        if(state.orderType === 'Alphabetically | Desc' || state.orderType === 'Alphabetically | Asc' ) {
+          mapChartTitle = "New Confirmed Сases of Disease"
+          return [
+            record.CountryCode.toLowerCase(), 
+            record.NewConfirmed
+          ]
+        }
+        if(state.orderType === 'New Confirmed | Desc' || state.orderType === 'New Confirmed | Asc' ) {
+          mapChartTitle = "New Confirmed Сases of Disease"
+          return [
+            record.CountryCode.toLowerCase(), 
+            record.NewConfirmed
+          ]
+        }
+        if(state.orderType === 'New Deaths | Desc' || state.orderType === 'New Deaths | Asc' ) {
+          mapChartTitle = "New Deaths"
+          return [
+            record.CountryCode.toLowerCase(), 
+            record.NewDeaths
+          ]
+        }
+        if(state.orderType === 'New Recovered | Desc' || state.orderType === 'New Recovered | Asc' ) {
+          mapChartTitle = "New Recovered"
+          return [
+            record.CountryCode.toLowerCase(), 
+            record.NewRecovered
+          ]
+        }
+        if(state.orderType === 'Total Confirmed | Desc' || state.orderType === 'Total Confirmed | Asc' ) {
+          mapChartTitle = "Total Confirmed Cases of Disease"
+          return [
+            record.CountryCode.toLowerCase(), 
+            record.TotalConfirmed
+          ]
+        }
+        if(state.orderType === 'Total Deaths | Desc' || state.orderType === 'Total Deaths | Asc' ) {
+          mapChartTitle = "Total Deaths"
+          return [
+            record.CountryCode.toLowerCase(), 
+            record.TotalDeaths
+          ]
+        }
+        if(state.orderType === 'Total Recovered | Desc' || state.orderType === 'Total Recovered | Asc' ) {
+          mapChartTitle = "Total Recovered"
+          return [
+            record.CountryCode.toLowerCase(), 
+            record.TotalRecovered
+          ]
+        }
+      })
+
+      return {
+        mapChartTitle,
+        mapDataList
+      }
     }
   }
 }
