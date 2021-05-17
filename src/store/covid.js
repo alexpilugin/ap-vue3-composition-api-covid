@@ -26,7 +26,8 @@ export const covid = {
         'TotalConfirmed',
         'TotalRecovered',
         'TotalDeaths'
-      ]
+      ],
+      orderType: 'Alphabetically | Desc'
     }
   },
 
@@ -43,6 +44,7 @@ export const covid = {
     },
     orderByType(state, orderType) {
       console.log('mutation orderByType', orderType)
+      state.orderType = orderType
       if(orderType === 'Alphabetically | Desc') {
         state.orderedList =  state.countries.sortBy('Country', true)
       }
@@ -229,23 +231,43 @@ export const covid = {
     },
     getCountryNamesNewConfirmed: (state) => {
       if(!state.countries) return [] 
-      const list = state.countries.sortBy('NewConfirmed', false).map(record => record.Country)
+      // const list = state.countries.sortBy('NewConfirmed', false).map(record => record.Country)
+      const list = state.orderedList.map(record => record.Country)
       return list.slice(0, 20) // first 20
     },
     getCountriesNewConfirmed: (state) => {
       if(!state.countries) return [] 
-      const list = state.countries.sortBy('NewConfirmed', false).map(record => record.NewConfirmed)
+      // const list = state.countries.sortBy('NewConfirmed', false).map(record => record.NewConfirmed)
+      const list = state.orderedList.map(record => record.NewConfirmed)
       return list.slice(0, 20) // first 20
     },
     getCountryNamesTotalConfirmed: (state) => {
       if(!state.countries) return [] 
-      const list = state.countries.sortBy('TotalConfirmed', false).map(record => record.Country)
+      // const list = state.countries.sortBy('TotalConfirmed', false).map(record => record.Country)
+      const list = state.orderedList.map(record => record.Country)
       return list.slice(0, 20) // first 20
     },
     getCountriesTotalConfirmed: (state) => {
       if(!state.countries) return [] 
-      const list = state.countries.sortBy('TotalConfirmed', false).map(record => record.TotalConfirmed)
+      // const list = state.countries.sortBy('TotalConfirmed', false).map(record => record.TotalConfirmed)
+      const list = state.orderedList.map(record => record.TotalConfirmed)
       return list.slice(0, 20) // first 20
+    },
+    getMapData: (state) => {
+      if(!state.countries) return [] 
+      /*
+      var mapDataList = [];
+      for(let i = 0; i < state.countries.length; i++) {
+        let record = state.countries[i]
+        mapDataList.push([record.CountryCode.toLowerCase(), record.TotalConfirmed]) 
+      }
+      */
+      const mapDataList = state.countries.map(record => [
+          record.CountryCode.toLowerCase(), 
+          record.NewConfirmed
+      ]) 
+      console.log('getMapData', mapDataList)
+      return mapDataList
     }
   }
 }

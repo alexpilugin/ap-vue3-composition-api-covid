@@ -30,7 +30,7 @@
           type: 'column',
         },
         title: {
-          text: 'Total Confirmed Cases. Top 20 Countries'
+          text: 'Total Confirmed Cases. 20 Countries'
         },
         xAxis: {
           categories: store.getters["covid/getCountryNamesTotalConfirmed"] //categories,

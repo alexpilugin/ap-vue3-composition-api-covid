@@ -17,22 +17,22 @@
         @onSelect="onSelectOrder"
       />
     </div>
+
+    <MapChart />
+    
     <div class="charts">
       <Top20NewConfirmedChart />
       <Top20TotalConfirmedChart />
     </div>
-    <div class="charts">
-      
-    </div>
 
     <div class="charts">
-      <GlobalTotalChart />
-      <GlobalNewCasesChart />     
+      <GlobalNewCasesChart />  
+      <GlobalTotalChart />   
     </div>
 
     <div class="charts" v-if="countries && countries.length === 1">
-      <CountryTotalChart />
       <CountryNewCasesChart />
+      <CountryTotalChart />
     </div>
     
     <div class="charts" v-if="countries && countries.length === 1">
@@ -70,6 +70,8 @@ import { computed, onMounted } from "vue";
 import InfoBlock from "../components/InfoBlock.vue";
 import Selector from "../components/Selector.vue";
 
+import MapChart from "../components/MapChart.vue";
+
 import GlobalNewCasesChart from "../components/GlobalNewCasesChart.vue";
 import GlobalTotalChart from "../components/GlobalTotalChart.vue";
 import CountryNewCasesChart from "../components/CountryNewCasesChart.vue";
@@ -87,7 +89,8 @@ export default {
     CountryNewCasesChart,
     CountryTotalChart,
     Top20NewConfirmedChart,
-    Top20TotalConfirmedChart
+    Top20TotalConfirmedChart,
+    MapChart
   },
 
   //setup() is called only once
