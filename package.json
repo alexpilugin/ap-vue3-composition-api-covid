@@ -4,7 +4,7 @@
   "licence": "MIT",
   "scripts": {
     "start": "yarn vite --config vite.config.js src",
-    "build": "yarn vite build --config vite.config.js src"
+    "build": "yarn vite build --base=/ap-vue3-covid-19/ --config vite.config.js src"
   },
   "dependencies": {
     "@highcharts/map-collection": "^1.1.3",
