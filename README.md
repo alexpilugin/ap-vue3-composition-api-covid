@@ -1,6 +1,6 @@
 # ap-vue3-covid
 
-[Online Demo](https://alexpi-vue.s3.eu-west-1.amazonaws.com)
+[Online Demo](https://alexpi-vue.s3.eu-west-1.amazonaws.com/ap-vue3-covid-19/index.html)
 
 This web app created by Alex Pilugin and uses [Vue.js version 3](https://v3.vuejs.org) with Composition API, [Vuex.js version 4](https://next.vuex.vuejs.org), [Vite.js](https://vitejs.dev/guide/)
 
